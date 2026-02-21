@@ -165,7 +165,7 @@ export default function Home() {
                   <span className="hero-name-line">AAKANKSHA</span>
                   <span className="hero-name-line hero-name-outline">TAYADE</span>
                 </h1>
-                <p className="hero-role">INTERIOR DESIGN SPECIALIST</p>
+                <p className="hero-role">Workplace Designer</p>
                 <p className="hero-subtitle">
                   Designing workplaces that elevate people, productivity & culture — across 2M+ sq.ft. of commercial interiors.
                 </p>
@@ -218,7 +218,7 @@ export default function Home() {
                 CREATING FUNCTIONAL AND AESTHETICALLY REFINED SPACES.
               </h2>
               <p className="about-description">
-                I am passionate about designing thoughtful, functional workspaces that seamlessly balance aesthetics and purpose. My design approach emphasizes subtle tones, clean layouts, and refined detailing to create environments that feel contemporary, sophisticated, and genuinely welcoming. I focus on understanding each client&apos;s vision and translating it into spaces that support productivity, collaboration, and everyday comfort. By combining strategic space planning with a refined visual language, I aim to deliver interiors that are not only visually cohesive but also practical, enduring, and aligned with the way people work today.
+                With 16 years of experience in workplace and commercial interiors, I design spaces that feel calm, purposeful, and naturally balanced. My work focuses on creating thoughtful environments where aesthetics and function support each other — using clean layouts, subtle tones, and refined detailing to shape contemporary, welcoming workplaces. I take time to understand each client&apos;s vision and translate it into spaces that encourage focus, collaboration, and everyday ease. Through strategic space planning and a clear visual language, I aim to create interiors that feel intuitive, enduring, and genuinely aligned with how people work today.
               </p>
             </div>
           </div>
@@ -335,7 +335,7 @@ export default function Home() {
                 <a href="mailto:contact@aakanksha-tayade.com">EMAIL</a>
                 <span>+91 91674 81822</span>
               </div>
-              <div>INTERIOR DESIGN SPECIALIST</div>
+              <div>Workplace Designer</div>
             </div>
           </div>
         </footer>
