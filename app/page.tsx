@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 import { ProjectsCarousel } from "@/components/projects-carousel"
+import { LogoutButton } from "@/components/logout-button"
 import {
   DraftingCompass,
   Box,
@@ -148,6 +149,9 @@ export default function Home() {
               <a href="#contact">Contact</a>
             </li>
           </ul>
+          <div className="flex gap-4 ml-4">
+            <LogoutButton />
+          </div>
         </nav>
       </header>
 
