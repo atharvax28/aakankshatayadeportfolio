@@ -149,9 +149,7 @@ export default function Home() {
               <a href="#contact">Contact</a>
             </li>
           </ul>
-          <div className="flex gap-4 ml-4">
-            <LogoutButton />
-          </div>
+          <LogoutButton />
         </nav>
       </header>
 

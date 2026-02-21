@@ -1,7 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/next"
-import { AuthProvider } from "@/lib/auth-context"
 import { AuthGuard } from "@/components/auth-guard"
 import "./globals.css"
 
@@ -45,12 +44,10 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <AuthProvider>
-          <AuthGuard>
-            {children}
-          </AuthGuard>
-          <Analytics />
-        </AuthProvider>
+        <AuthGuard>
+          {children}
+        </AuthGuard>
+        <Analytics />
       </body>
     </html>
   )

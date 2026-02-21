@@ -1,41 +1,55 @@
-'use client';
+'use client'
 
-import { useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { useAuth } from '@/lib/auth-context';
+import { useEffect, useState } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
+import { isSessionValid } from '@/lib/auth-utils'
 
 export function AuthGuard({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const { isAuthenticated, isLoading } = useAuth();
+  const router = useRouter()
+  const pathname = usePathname()
+  const [isChecking, setIsChecking] = useState(true)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
-    // Don't redirect while loading
-    if (isLoading) {
-      return;
+    const checkAuth = () => {
+      const authenticated = isSessionValid()
+      setIsAuthenticated(authenticated)
+
+      // If not authenticated and not on login page, redirect to login
+      if (!authenticated && pathname !== '/login') {
+        router.push('/login')
+      }
+
+      // If authenticated and on login page, redirect to home
+      if (authenticated && pathname === '/login') {
+        router.push('/')
+      }
+
+      setIsChecking(false)
     }
 
-    // List of public routes that don't require authentication
-    const publicRoutes = ['/login'];
-    const isPublicRoute = publicRoutes.includes(pathname);
+    checkAuth()
+  }, [pathname, router])
 
-    if (!isAuthenticated && !isPublicRoute) {
-      // Redirect to login if not authenticated
-      router.push('/login');
-    } else if (isAuthenticated && pathname === '/login') {
-      // Redirect to home if already authenticated and on login page
-      router.push('/');
-    }
-  }, [isAuthenticated, isLoading, pathname, router]);
-
-  // Show loading state
-  if (isLoading) {
+  // Show loading state while checking
+  if (isChecking) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-900">
-        <div className="text-white">Loading...</div>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        backgroundColor: '#050505'
+      }}>
+        <div style={{
+          fontSize: '16px',
+          color: '#A1A1A6'
+        }}>
+          Loading...
+        </div>
       </div>
-    );
+    )
   }
 
-  return <>{children}</>;
+  return <>{children}</>
 }

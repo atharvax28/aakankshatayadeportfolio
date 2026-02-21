@@ -1,25 +1,40 @@
-'use client';
+'use client'
 
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/lib/auth-context';
-import { LogOut } from 'lucide-react';
+import { useRouter } from 'next/navigation'
+import { clearSession } from '@/lib/auth-utils'
 
 export function LogoutButton() {
-  const router = useRouter();
-  const { logout } = useAuth();
+  const router = useRouter()
 
   const handleLogout = () => {
-    logout();
-    router.push('/login');
-  };
+    clearSession()
+    router.push('/login')
+  }
 
   return (
     <button
       onClick={handleLogout}
-      className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-red-400 hover:text-red-300 transition border border-red-500/50 hover:border-red-500"
+      style={{
+        padding: '10px 20px',
+        backgroundColor: '#007AFF',
+        color: 'white',
+        border: 'none',
+        borderRadius: '8px',
+        cursor: 'pointer',
+        fontSize: '14px',
+        fontWeight: '600',
+        transition: 'all 0.2s ease'
+      }}
+      onMouseEnter={(e) => {
+        (e.target as HTMLElement).style.backgroundColor = '#0066D6'
+        ;(e.target as HTMLElement).style.transform = 'translateY(-1px)'
+      }}
+      onMouseLeave={(e) => {
+        (e.target as HTMLElement).style.backgroundColor = '#007AFF'
+        ;(e.target as HTMLElement).style.transform = 'translateY(0)'
+      }}
     >
-      <LogOut className="w-4 h-4" />
       Logout
     </button>
-  );
+  )
 }
