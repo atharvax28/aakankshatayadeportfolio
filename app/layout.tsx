@@ -1,7 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import { AuthProvider } from "@/components/auth-provider"
 import "./globals.css"
 
@@ -10,12 +9,6 @@ export const metadata: Metadata = {
   description:
     "Associate Workplace Designer with 16+ years of experience in commercial interiors, space planning, and people-centric design. Specializing in transforming business spaces.",
   generator: "v0.app",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
   icons: {
     icon: [
       {
@@ -55,7 +48,6 @@ export default function RootLayout({
           {children}
         </AuthProvider>
         <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   )

@@ -15,25 +15,19 @@ import {
 
 export default function Home() {
   useEffect(() => {
-    // Detect if mobile device
-    const isMobile = window.innerWidth <= 768
-
-    // Mouse Blob Follower (disabled on mobile)
+    // Mouse Blob Follower
     const blob = document.getElementById("cursor-blob")
     const handleMouseMove = (e: MouseEvent) => {
-      if (!isMobile && blob) {
-        const x = e.clientX
-        const y = e.clientY
+      const x = e.clientX
+      const y = e.clientY
+      if (blob) {
         blob.style.transform = `translate(${x - 200}px, ${y - 200}px)`
       }
     }
-    if (!isMobile) {
-      document.addEventListener("mousemove", handleMouseMove)
-    }
+    document.addEventListener("mousemove", handleMouseMove)
 
-    // Parallax Effect (disabled on mobile for better performance)
+    // Parallax Effect
     const handleScroll = () => {
-      if (isMobile) return
       const scroll = window.pageYOffset
 
       // Hero parallax
