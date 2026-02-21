@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect } from "react"
-import Image from "next/image"
 import { ProjectsCarousel } from "@/components/projects-carousel"
 import {
   DraftingCompass,
@@ -195,12 +194,10 @@ export default function Home() {
             {/* Right: Image */}
             <div className="hero-right">
               <div className="hero-image-container" id="hero-img">
-                <Image
+                <img
                   src="/projects/fractal/img-05.jpg"
                   alt="Interior Design by Aakanksha Tayade"
-                  fill
                   className="hero-image"
-                  priority
                 />
                 <div className="hero-image-overlay"></div>
                 <div className="hero-image-label">
@@ -220,7 +217,7 @@ export default function Home() {
                 CREATING FUNCTIONAL AND AESTHETICALLY REFINED SPACES.
               </h2>
               <p className="about-description">
-                With 16+ years designing premium workplace and commercial interiors, I create environments that feel thoughtful, balanced, and deeply connected to the people who use them. I translate business vision and culture into refined spaces that support focus, encourage collaboration, and bring a sense of ease to everyday work. My approach blends clear space planning with timeless aesthetics to deliver workplaces that feel modern, welcoming, and built to perform.
+                I am passionate about designing thoughtful, functional workspaces that seamlessly balance aesthetics and purpose. My design approach emphasizes subtle tones, clean layouts, and refined detailing to create environments that feel contemporary, sophisticated, and genuinely welcoming. I focus on understanding each client&apos;s vision and translating it into spaces that support productivity, collaboration, and everyday comfort. By combining strategic space planning with a refined visual language, I aim to deliver interiors that are not only visually cohesive but also practical, enduring, and aligned with the way people work today.
               </p>
             </div>
           </div>

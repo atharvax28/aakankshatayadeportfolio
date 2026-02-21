@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Image from "next/image"
 import { X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react"
 
 interface ProjectGalleryProps {
@@ -53,13 +52,7 @@ export function ProjectGallery({ images, projectName }: ProjectGalleryProps) {
                         className="gallery-item relative group cursor-pointer"
                         onClick={() => openModal(index)}
                     >
-                        <Image
-                            src={image}
-                            alt={`${projectName} - Image ${index + 1}`}
-                            fill
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            className="object-cover"
-                        />
+                        <img src={image} alt={`${projectName} - Image ${index + 1}`} />
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                             <ZoomIn size={48} className="text-white opacity-80" />
                         </div>
@@ -93,11 +86,10 @@ export function ProjectGallery({ images, projectName }: ProjectGalleryProps) {
                         className="relative w-full h-full max-w-7xl max-h-[90vh] p-4 flex items-center justify-center"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <Image
+                        <img
                             src={images[selectedImage]}
                             alt={`${projectName} - Full view`}
-                            fill
-                            className="object-contain select-none"
+                            className="max-w-full max-h-full object-contain select-none"
                         />
                         {/* Image Counter */}
                         <div className="absolute bottom-[-30px] left-1/2 transform -translate-x-1/2 text-white/60 font-[var(--syne)] text-[0.7875rem] tracking-widest">

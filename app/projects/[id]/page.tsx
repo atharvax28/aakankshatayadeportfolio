@@ -1,6 +1,6 @@
+import type { Metadata } from "next"
 import { projects } from "@/lib/projects"
 import Link from "next/link"
-import Image from "next/image"
 import { notFound } from "next/navigation"
 import { ProjectGallery } from "@/components/project-gallery"
 
@@ -16,7 +16,7 @@ export async function generateStaticParams() {
   }))
 }
 
-export async function generateMetadata(props: ProjectPageProps) {
+export async function generateMetadata(props: ProjectPageProps): Promise<Metadata> {
   const params = await props.params
   const project = projects.find((p) => p.id === params.id)
 
@@ -44,6 +44,11 @@ export default async function ProjectPage(props: ProjectPageProps) {
   const nextProject = projects[(projectIndex + 1) % projects.length]
   const prevProject = projects[(projectIndex - 1 + projects.length) % projects.length]
 
+  // Find the first reception image to use as hero, fallback to first image
+  const heroImage = project.gallerySections?.find(
+    s => s.title.toLowerCase().includes('reception')
+  )?.images[0] || project.images[0]
+
   return (
     <div className="project-detail-page">
       {/* Back Navigation */}
@@ -65,14 +70,11 @@ export default async function ProjectPage(props: ProjectPageProps) {
       </section>
 
       {/* Main Image */}
-      <section className="project-main-image relative w-full h-[60vh] md:h-[80vh]">
-        <Image
-          src={project.images[0]}
+      <section className="project-main-image w-full h-[60vh] md:h-[80vh]">
+        <img
+          src={heroImage}
           alt={project.name}
-          fill
-          sizes="100vw"
-          className="object-cover"
-          priority
+          className="w-full h-full object-cover"
         />
       </section>
 
@@ -108,7 +110,22 @@ export default async function ProjectPage(props: ProjectPageProps) {
       <section className="project-gallery">
         <div className="container">
           <h2 className="gallery-title">Project Gallery</h2>
-          <ProjectGallery images={project.images} projectName={project.name} />
+
+          {project.gallerySections ? (
+            <div className="gallery-sections-wrapper">
+              {project.gallerySections.map((section, idx) => (
+                <div key={idx} className="gallery-section-block">
+                  <div className="section-header">
+                    <span className="section-num">{(idx + 1).toString().padStart(2, '0')}</span>
+                    <h3 className="section-title">{section.title}</h3>
+                  </div>
+                  <ProjectGallery images={section.images} projectName={project.name} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <ProjectGallery images={project.images} projectName={project.name} />
+          )}
         </div>
       </section>
 
