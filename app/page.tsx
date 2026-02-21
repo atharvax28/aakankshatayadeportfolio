@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 import { ProjectsCarousel } from "@/components/projects-carousel"
+import { AuthGuard } from "@/components/auth-guard"
 import {
   DraftingCompass,
   Box,
@@ -124,7 +125,7 @@ export default function Home() {
   }, [])
 
   return (
-    <>
+    <AuthGuard>
       <div className="blob" id="cursor-blob"></div>
 
       <header className="main-header">
@@ -339,6 +340,6 @@ export default function Home() {
           </div>
         </footer>
       </main>
-    </>
+    </AuthGuard>
   )
 }
