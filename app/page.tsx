@@ -15,16 +15,63 @@ import {
 
 export default function Home() {
   useEffect(() => {
-    // Mouse Blob Follower
-    const blob = document.getElementById("cursor-blob")
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = e.clientX
-      const y = e.clientY
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const isCoarsePointer = window.matchMedia("(hover: none) and (pointer: coarse)").matches
+
+    let blobAnimationFrame = 0
+    let latestPointerX = window.innerWidth / 2
+    let latestPointerY = window.innerHeight / 2
+
+    const getBlobElement = () => document.getElementById("cursor-blob")
+
+    const applyBlobPosition = () => {
+      const blob = getBlobElement()
       if (blob) {
-        blob.style.transform = `translate(${x - 200}px, ${y - 200}px)`
+        blob.style.transform = `translate3d(${latestPointerX - 200}px, ${latestPointerY - 200}px, 0)`
+      }
+      blobAnimationFrame = 0
+    }
+
+    const queueBlobPosition = () => {
+      if (blobAnimationFrame === 0) {
+        blobAnimationFrame = requestAnimationFrame(applyBlobPosition)
       }
     }
-    document.addEventListener("mousemove", handleMouseMove)
+
+    const updatePointer = (e: { clientX: number; clientY: number }) => {
+      latestPointerX = e.clientX
+      latestPointerY = e.clientY
+      queueBlobPosition()
+    }
+
+    const handlePointerMove = (e: PointerEvent) => {
+      if (e.pointerType === "touch") {
+        return
+      }
+      updatePointer(e)
+    }
+
+    const handleMouseMove = (e: MouseEvent) => {
+      updatePointer(e)
+    }
+
+    const handlePageShow = () => {
+      queueBlobPosition()
+    }
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        queueBlobPosition()
+      }
+    }
+
+    if (!prefersReducedMotion && !isCoarsePointer) {
+      queueBlobPosition()
+      document.addEventListener("pointermove", handlePointerMove, { passive: true })
+      document.addEventListener("mousemove", handleMouseMove, { passive: true })
+      window.addEventListener("pageshow", handlePageShow)
+      document.addEventListener("visibilitychange", handleVisibilityChange)
+    }
 
     // Parallax Effect
     const handleScroll = () => {
@@ -115,7 +162,13 @@ export default function Home() {
     document.addEventListener('click', handleOutsideClick);
 
     return () => {
+      if (blobAnimationFrame !== 0) {
+        cancelAnimationFrame(blobAnimationFrame)
+      }
+      document.removeEventListener("pointermove", handlePointerMove)
       document.removeEventListener("mousemove", handleMouseMove)
+      window.removeEventListener("pageshow", handlePageShow)
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
       window.removeEventListener("scroll", handleScroll)
       document.removeEventListener('click', handleOutsideClick)
       if (mobileToggle) mobileToggle.removeEventListener('click', handleMobileToggleClick)
