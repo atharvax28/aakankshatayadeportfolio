@@ -22,8 +22,6 @@ export default function Home() {
     let latestPointerX = window.innerWidth / 2
     let latestPointerY = window.innerHeight / 2
 
-    let blobObserver: MutationObserver | null = null
-
     const getBlobElement = () => document.getElementById("cursor-blob")
 
     const applyBlobPosition = () => {
@@ -73,14 +71,6 @@ export default function Home() {
       document.addEventListener("mousemove", handleMouseMove, { passive: true })
       window.addEventListener("pageshow", handlePageShow)
       document.addEventListener("visibilitychange", handleVisibilityChange)
-
-      blobObserver = new MutationObserver(() => {
-        if (getBlobElement()) {
-          queueBlobPosition()
-        }
-      })
-
-      blobObserver.observe(document.body, { childList: true, subtree: true })
     }
 
     // Parallax Effect
@@ -179,7 +169,6 @@ export default function Home() {
       document.removeEventListener("mousemove", handleMouseMove)
       window.removeEventListener("pageshow", handlePageShow)
       document.removeEventListener("visibilitychange", handleVisibilityChange)
-      blobObserver?.disconnect()
       window.removeEventListener("scroll", handleScroll)
       document.removeEventListener('click', handleOutsideClick)
       if (mobileToggle) mobileToggle.removeEventListener('click', handleMobileToggleClick)
